@@ -1260,8 +1260,12 @@ def _CalculateArgLengths(opening):
   shortList = list()
   deltaList = list()
   delta = 0
-  while token.name in ("NAME", "EQUAL", "DOT", "STRING", "NUMBER"):
+  while True:
     shortList.append(token)
+    if token.name == "RPAR":
+      argList.append(shortList)
+      deltaList.append(delta)
+      break
     token = token.next_token
     if token.name == "COMMA":
       shortList.append(token)
@@ -1290,9 +1294,8 @@ def _CalculateArgLengths(opening):
       token = token.next_token
     elif token.name == "RPAR":
       shortList.append(token)
+      argList.append(shortList)
       deltaList.append(delta)
-      shortList = list()
-      delta = 0
       break
 
   argLengths = list()
