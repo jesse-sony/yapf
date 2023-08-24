@@ -1260,20 +1260,14 @@ def _CalculateArgLengths(opening):
   shortList = list()
   deltaList = list()
   delta = 0
-  while True:
+  while token:
     shortList.append(token)
-    if token.name == "RPAR":
-      argList.append(shortList)
-      deltaList.append(delta)
-      break
-    token = token.next_token
     if token.name == "COMMA":
       shortList.append(token)
       argList.append(shortList)
       deltaList.append(delta)
       shortList = list()
       delta = 0
-      token = token.next_token
     elif token.name == "LPAR":
       shortList.append(token)
       if _IsFunctionCallWithArguments(token.previous_token):
@@ -1291,12 +1285,12 @@ def _CalculateArgLengths(opening):
         delta = 0
       else:
         shortList.append(token)
-      token = token.next_token
     elif token.name == "RPAR":
       shortList.append(token)
       argList.append(shortList)
       deltaList.append(delta)
       break
+    token = token.next_token
 
   argLengths = list()
   for l, d in zip(argList, deltaList):
