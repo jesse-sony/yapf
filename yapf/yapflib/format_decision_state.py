@@ -1261,13 +1261,11 @@ def _CalculateArgLengths(opening):
   while token:
     shortList.append(token)
     if token.name == "COMMA":
-      shortList.append(token)
       argList.append(shortList)
       deltaList.append(delta)
       shortList = list()
       delta = 0
     elif token.name == "LPAR":
-      shortList.append(token)
       if _IsFunctionCallWithArguments(token.previous_token):
         maxArg = max(_CalculateArgLengths(token))
         endToken = token.matching_bracket
@@ -1276,7 +1274,6 @@ def _CalculateArgLengths(opening):
       token = token.matching_bracket
       shortList.append(token)
     elif token.name == "RPAR":
-      shortList.append(token)
       argList.append(shortList)
       deltaList.append(delta)
       break
