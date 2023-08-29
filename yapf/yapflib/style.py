@@ -259,6 +259,15 @@ _STYLE_HELP = dict(
         my_dict[ 3 ][ 1 ][ get_index( *args, **kwargs ) ]
         my_set = { 1, 2, 3 }
     """),
+    SPACE_AFTER_DICT_KEY=textwrap.dedent("""\
+      Adds a space after a dict key before the colon.
+
+        {1: 2}
+
+      will be formatted as:
+
+        {1 : 2}
+    """),
     SPACES_AROUND_DEFAULT_OR_NAMED_ASSIGN=textwrap.dedent("""\
       Use spaces around default or named assigns.
     """),
@@ -507,6 +516,7 @@ def CreatePEP8Style():
       NO_SPACES_AROUND_SELECTED_BINARY_OPERATORS=set(),
       SPACE_BETWEEN_ENDING_COMMA_AND_CLOSING_BRACKET=True,
       SPACE_INSIDE_BRACKETS=False,
+      SPACE_AFTER_DICT_KEY=False,
       SPACES_AROUND_DEFAULT_OR_NAMED_ASSIGN=False,
       SPACES_AROUND_DICT_DELIMITERS=False,
       SPACES_AROUND_LIST_DELIMITERS=False,
@@ -697,6 +707,7 @@ _STYLE_OPTION_VALUE_CONVERTER = dict(
     NO_SPACES_AROUND_SELECTED_BINARY_OPERATORS=_StringSetConverter,
     SPACE_BETWEEN_ENDING_COMMA_AND_CLOSING_BRACKET=_BoolConverter,
     SPACE_INSIDE_BRACKETS=_BoolConverter,
+    SPACE_AFTER_DICT_KEY=_BoolConverter,
     SPACES_AROUND_DEFAULT_OR_NAMED_ASSIGN=_BoolConverter,
     SPACES_AROUND_DICT_DELIMITERS=_BoolConverter,
     SPACES_AROUND_LIST_DELIMITERS=_BoolConverter,
