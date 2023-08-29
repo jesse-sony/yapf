@@ -310,6 +310,9 @@ def _SpaceRequiredBetween(left, right, is_line_disabled):
        _IsSubscriptColonAndValuePair(right, left))):
     # Supersede the "never want a space before a colon or comma" check.
     return True
+  if (style.Get('SPACE_AFTER_DICT_KEY') and left.is_dict_key and rval == ":"):
+    # Supersede the "never want a space before a colon or comma" check.
+    return True
   if rval in ':,':
     # Otherwise, we never want a space before a colon or comma.
     return False
