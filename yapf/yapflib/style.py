@@ -349,6 +349,12 @@ _STYLE_HELP = dict(
       Split before arguments, but do not split all subexpressions recursively
       (unless needed).
     """),
+    SPLIT_ARGUMENTS_SQUISH_PERCENTAGE=textwrap.dedent("""\
+      The percentage (as an integer) of the line remaining where an argument
+      wrap will be forced if the argument starts after that location. Set this
+      to zero to prevent yapf from wrapping arguments that do not absolutely
+      need to be wrapped.
+    """),
     SPLIT_ARGUMENTS_WHEN_COMMA_TERMINATED=textwrap.dedent("""\
       Split before arguments if the argument list is terminated by a
       comma.
@@ -505,6 +511,7 @@ def CreatePEP8Style():
       SPLIT_ALL_COMMA_SEPARATED_VALUES=False,
       SPLIT_ALL_LOGICAL_OPERATORS_IF_ANY_SPLIT=False,
       SPLIT_ALL_TOP_LEVEL_COMMA_SEPARATED_VALUES=False,
+      SPLIT_ARGUMENTS_SQUISH_PERCENTAGE=30,
       SPLIT_ARGUMENTS_WHEN_COMMA_TERMINATED=False,
       SPLIT_BEFORE_ARITHMETIC_OPERATOR=False,
       SPLIT_BEFORE_BITWISE_OPERATOR=True,
@@ -694,6 +701,7 @@ _STYLE_OPTION_VALUE_CONVERTER = dict(
     SPLIT_ALL_COMMA_SEPARATED_VALUES=_BoolConverter,
     SPLIT_ALL_LOGICAL_OPERATORS_IF_ANY_SPLIT=_BoolConverter,
     SPLIT_ALL_TOP_LEVEL_COMMA_SEPARATED_VALUES=_BoolConverter,
+    SPLIT_ARGUMENTS_SQUISH_PERCENTAGE=int,
     SPLIT_ARGUMENTS_WHEN_COMMA_TERMINATED=_BoolConverter,
     SPLIT_BEFORE_ARITHMETIC_OPERATOR=_BoolConverter,
     SPLIT_BEFORE_BITWISE_OPERATOR=_BoolConverter,
