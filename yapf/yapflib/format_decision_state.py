@@ -961,6 +961,25 @@ class FormatDecisionState(object):
     cont_aligned_indent = self._IndentWithContinuationAlignStyle(
         top_of_stack.indent)
 
+    if (not self.param_list_stack and _IsCompoundStatement(self.line.first) and
+        (not (style.Get('DEDENT_CLOSING_BRACKETS') or
+              style.Get('INDENT_CLOSING_BRACKETS')) or
+         style.Get('SPLIT_BEFORE_FIRST_ARGUMENT'))):
+      token_indent = (
+          len(self.line.first.whitespace_prefix.split('\n')[-1]) +
+          style.Get('INDENT_WIDTH'))
+      if token_indent == top_of_stack.indent:
+        return token_indent + style.Get('CONTINUATION_INDENT_WIDTH')
+
+    if (self.param_list_stack and
+        not self.param_list_stack[-1].SplitBeforeClosingBracket(
+            top_of_stack.indent) and top_of_stack.indent
+        == ((self.line.depth + 1) * style.Get('INDENT_WIDTH'))):
+      if (subtypes.PARAMETER_START in current.subtypes or
+          (previous.is_comment and
+           subtypes.PARAMETER_START in previous.subtypes)):
+        return top_of_stack.indent + style.Get('CONTINUATION_INDENT_WIDTH')
+
     if current.OpensScope():
       return cont_aligned_indent if self.paren_level else self.first_indent
 
@@ -980,25 +999,6 @@ class FormatDecisionState(object):
       if previous and (previous.value == ':' or previous.is_pseudo):
         if subtypes.DICTIONARY_VALUE in current.subtypes:
           return top_of_stack.indent
-
-    if (not self.param_list_stack and _IsCompoundStatement(self.line.first) and
-        (not (style.Get('DEDENT_CLOSING_BRACKETS') or
-              style.Get('INDENT_CLOSING_BRACKETS')) or
-         style.Get('SPLIT_BEFORE_FIRST_ARGUMENT'))):
-      token_indent = (
-          len(self.line.first.whitespace_prefix.split('\n')[-1]) +
-          style.Get('INDENT_WIDTH'))
-      if token_indent == top_of_stack.indent:
-        return token_indent + style.Get('CONTINUATION_INDENT_WIDTH')
-
-    if (self.param_list_stack and
-        not self.param_list_stack[-1].SplitBeforeClosingBracket(
-            top_of_stack.indent) and top_of_stack.indent
-        == ((self.line.depth + 1) * style.Get('INDENT_WIDTH'))):
-      if (subtypes.PARAMETER_START in current.subtypes or
-          (previous.is_comment and
-           subtypes.PARAMETER_START in previous.subtypes)):
-        return top_of_stack.indent + style.Get('CONTINUATION_INDENT_WIDTH')
 
     return cont_aligned_indent
 
