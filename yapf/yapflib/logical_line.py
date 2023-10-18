@@ -270,7 +270,8 @@ def _PriorityIndicatingNoSpace(tok):
 
 
 def _IsSubscriptColonAndValuePair(token1, token2):
-  return (token1.is_number or token1.is_name) and token2.is_subscript_colon
+  return (token1.could_be_number or
+          token1.is_name) and token2.is_subscript_colon
 
 
 def _SpaceRequiredBetween(left, right, is_line_disabled):

@@ -295,6 +295,13 @@ class FormatToken(object):
     return self.type == token.NUMBER
 
   @property
+  def could_be_number(self):
+    if (self.type == token.MINUS and self.next_token and
+        self.next_token.type == token.NUMBER):
+      return True
+    return self.is_number
+
+  @property
   def is_string(self):
     return self.type == token.STRING
 
