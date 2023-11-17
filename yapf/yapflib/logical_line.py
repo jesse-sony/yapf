@@ -697,6 +697,9 @@ def _SplitPenalty(prev_token, cur_token):
     # We would rather not split before an equality operator.
     return split_penalty.STRONGLY_CONNECTED
   if cur_token.ClosesScope():
+    if not style.Get("SPLIT_BEFORE_CLOSING_BRACKET"):
+      return split_penalty.STRONGLY_CONNECTED
     # Give a slight penalty for splitting before the closing scope.
-    return 100
+    else:
+      return 100
   return 0
